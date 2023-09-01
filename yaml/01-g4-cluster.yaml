@@ -1,0 +1,21 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: g4-k8s # nombre del cluster
+  version: "1.27"  # version del cluster
+  region: us-east-1   # region en donde se crea el cluster
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: g4-k8s-nm
+    minsize: 3
+    maxsize: 5
+    desiredCapacity: 3   # cantidad de workers que tiene que tener el cluster
+    instanceType: t2.small   # configuracion de la instancia de los workers
+    ssh:
+      allow: false
+    iam:
+      withAddonPolicies:
+        autoScaler: true
